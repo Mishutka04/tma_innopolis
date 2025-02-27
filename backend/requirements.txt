@@ -1,0 +1,8 @@
+fastapi[all]
+passlib
+python-jose
+sqlalchemy
+asyncpg
+aiohttp
+alembic
+psycopg2
