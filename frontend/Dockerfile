@@ -1,32 +1,27 @@
-# Этап сборки
-FROM node:18-alpine AS build
+# Используем базовый образ Node.js
+FROM node:22.11-alpine AS build 
 
+# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем файлы package.json и package-lock.json
-COPY ./frontend/package*.json ./
+# Копируем package.json и package-lock.json для установки зависимостей
+COPY package*.json ./
 
 # Устанавливаем зависимости
 RUN npm install
 
-# Копируем исходный код
+# Копируем все файлы проекта в контейнер
 COPY . .
 
-# Собираем приложение
-RUN ls -la /app && npm run build
+# Build your application (if applicable)
+RUN npm run build 
 
-# Этап production
+# Используем базовый образ Nginx для сервировки
 FROM nginx:stable-alpine
 
-# Копируем собранные файлы
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Копируем конфигурацию nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Удаляем дефолтную конфигурацию nginx
-RUN rm -rf /etc/nginx/conf.d/default.conf.default
+# Копируем скомпилированные файлы из стадии сборки
+COPY --from=build /app/dist /usr/share/nginx/html 
+COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf  
 
 EXPOSE 3000
-
 CMD ["nginx", "-g", "daemon off;"]
