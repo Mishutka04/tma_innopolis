@@ -4,7 +4,7 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 # Копируем файлы package.json и package-lock.json
-COPY package*.json ./
+COPY ./frontend/package*.json ./
 
 # Устанавливаем зависимости
 RUN npm install
