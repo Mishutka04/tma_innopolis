@@ -13,7 +13,7 @@ RUN npm install
 COPY . .
 
 # Собираем приложение
-RUN npm run build
+RUN ls -la /app && npm run build
 
 # Этап production
 FROM nginx:stable-alpine
