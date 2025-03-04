@@ -953,12 +953,13 @@ function acceptEvent() {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  color: #000 !important;
 }
 
 body {
   font-family: 'Roboto', 'Arial', sans-serif;
   line-height: 1.6;
-  color: #333;
+  color: #000;
   background-color: #f5f5f5;
 }
 
